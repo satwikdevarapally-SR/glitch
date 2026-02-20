@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Smart KYC Vault - Securely store verified identity data, auto-fill forms, and control data sharing with consent-based access.">
+    <title>Smart KYC Vault | Secure Identity Management</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- ============ SPLASH / LOADING SCREEN ============ -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-icon">
+                <span class="material-icons-round">enhanced_encryption</span>
+                <div class="splash-rings">
+                    <div class="ring ring-1"></div>
+                    <div class="ring ring-2"></div>
+                    <div class="ring ring-3"></div>
+                </div>
+            </div>
+            <h1 class="splash-title">KYC <span class="gradient-text">Vault</span></h1>
+            <p class="splash-subtitle">Initializing secure environment...</p>
+            <div class="splash-loader">
+                <div class="loader-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ AUTH SCREEN ============ -->
+    <div id="auth-screen" class="screen auth-screen hidden">
+        <div class="auth-container">
+            <div class="auth-left">
+                <div class="auth-branding">
+                    <div class="auth-logo">
+                        <span class="material-icons-round">enhanced_encryption</span>
+                    </div>
+                    <h1>KYC <span class="gradient-text">Vault</span></h1>
+                    <p>Your identity, your control. Store once, use everywhere.</p>
+                </div>
+                <div class="auth-features">
+                    <div class="auth-feature">
+                        <span class="material-icons-round">shield</span>
+                        <div>
+                            <h4>Bank-Grade Security</h4>
+                            <p>Your data is encrypted and stored securely</p>
+                        </div>
+                    </div>
+                    <div class="auth-feature">
+                        <span class="material-icons-round">speed</span>
+                        <div>
+                            <h4>Instant Auto-Fill</h4>
+                            <p>Fill forms in seconds, not minutes</p>
+                        </div>
+                    </div>
+                    <div class="auth-feature">
+                        <span class="material-icons-round">tune</span>
+                        <div>
+                            <h4>Consent Control</h4>
+                            <p>Share only what you choose to share</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="auth-particles" id="auth-particles"></div>
+            </div>
+            <div class="auth-right">
+                <!-- LOGIN FORM -->
+                <div id="login-form" class="auth-form">
+                    <h2>Welcome Back</h2>
+                    <p class="auth-form-subtitle">Sign in to access your secure vault</p>
+                    <div class="form-group">
+                        <label for="login-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons-round">mail</span>
+                            <input type="email" id="login-email" placeholder="you@example.com" autocomplete="email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons-round">lock</span>
+                            <input type="password" id="login-password" placeholder="Enter your password"
+                                autocomplete="current-password">
+                            <button class="toggle-password" type="button"
+                                onclick="togglePassword('login-password', this)">
+                                <span class="material-icons-round">visibility_off</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-full" onclick="handleLogin()">
+                        <span class="material-icons-round">login</span>
+                        Sign In
+                    </button>
+                    <p class="auth-switch">Don't have an account? <a href="#" onclick="showRegister()">Create one</a>
+                    </p>
+                </div>
+                <!-- REGISTER FORM -->
+                <div id="register-form" class="auth-form hidden">
+                    <h2>Create Account</h2>
+                    <p class="auth-form-subtitle">Start securing your identity today</p>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="reg-first">First Name</label>
+                            <div class="input-wrapper">
+                                <span class="material-icons-round">person</span>
+                                <input type="text" id="reg-first" placeholder="John">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg-last">Last Name</label>
+                            <div class="input-wrapper">
+                                <span class="material-icons-round">person</span>
+                                <input type="text" id="reg-last" placeholder="Doe">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons-round">mail</span>
+                            <input type="email" id="reg-email" placeholder="you@example.com">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-password">Password</label>
+                        <div class="input-wrapper">
+                            <span class="material-icons-round">lock</span>
+                            <input type="password" id="reg-password" placeholder="Min 8 characters">
+                            <button class="toggle-password" type="button"
+                                onclick="togglePassword('reg-password', this)">
+                                <span class="material-icons-round">visibility_off</span>
+                            </button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-full" onclick="handleRegister()">
+                        <span class="material-icons-round">person_add</span>
+                        Create Account
+                    </button>
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="showLogin()">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ EMAIL VERIFICATION SCREEN ============ -->
+    <div id="verify-screen" class="screen verify-screen hidden">
+        <div class="verify-container">
+            <div class="verify-card">
+                <div class="verify-icon-wrapper">
+                    <div class="verify-icon-circle">
+                        <span class="material-icons-round">mark_email_unread</span>
+                    </div>
+                    <div class="verify-pulse"></div>
+                </div>
+                <h2>Verify Your Email</h2>
+                <p class="verify-subtitle">We've sent a verification link to:</p>
+                <p class="verify-email" id="verify-email-display">you@example.com</p>
+                <div class="verify-steps">
+                    <div class="verify-step">
+                        <span class="step-number">1</span>
+                        <span>Open your email inbox</span>
+                    </div>
+                    <div class="verify-step">
+                        <span class="step-number">2</span>
+                        <span>Click the verification link</span>
+                    </div>
+                    <div class="verify-step">
+                        <span class="step-number">3</span>
+                        <span>Come back here and click "I've Verified"</span>
+                    </div>
+                </div>
+                <div class="verify-actions">
+                    <button class="btn btn-primary" onclick="checkVerification()">
+                        <span class="material-icons-round">verified</span> I've Verified My Email
+                    </button>
+                    <button class="btn btn-outline" id="resend-btn" onclick="resendVerification()">
+                        <span class="material-icons-round">refresh</span> Resend Verification Email
+                    </button>
+                    <button class="btn btn-text" onclick="handleLogout()">
+                        <span class="material-icons-round">logout</span> Sign Out & Use Different Email
+                    </button>
+                </div>
+                <p class="verify-hint">
+                    <span class="material-icons-round">info</span>
+                    Check your spam folder if you don't see the email
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ MAIN APPLICATION ============ -->
+    <div id="app-screen" class="screen app-screen hidden">
+        <!-- SIDEBAR -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <span class="material-icons-round">enhanced_encryption</span>
+                    <span class="logo-text">KYC <span class="gradient-text">Vault</span></span>
+                </div>
+                <button class="sidebar-toggle" id="sidebar-toggle" onclick="toggleSidebar()">
+                    <span class="material-icons-round">menu</span>
+                </button>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard" onclick="navigateTo('dashboard', this)">
+                    <span class="material-icons-round">dashboard</span>
+                    <span class="nav-label">Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="vault" onclick="navigateTo('vault', this)">
+                    <span class="material-icons-round">account_balance_wallet</span>
+                    <span class="nav-label">My Vault</span>
+                </a>
+                <a href="#" class="nav-item" data-page="autofill" onclick="navigateTo('autofill', this)">
+                    <span class="material-icons-round">edit_note</span>
+                    <span class="nav-label">Auto-Fill Demo</span>
+                </a>
+                <a href="#" class="nav-item" data-page="scanner" onclick="navigateTo('scanner', this)">
+                    <span class="material-icons-round">document_scanner</span>
+                    <span class="nav-label">Form Scanner</span>
+                </a>
+                <a href="#" class="nav-item" data-page="consent" onclick="navigateTo('consent', this)">
+                    <span class="material-icons-round">admin_panel_settings</span>
+                    <span class="nav-label">Consent Manager</span>
+                </a>
+                <a href="#" class="nav-item" data-page="audit" onclick="navigateTo('audit', this)">
+                    <span class="material-icons-round">receipt_long</span>
+                    <span class="nav-label">Audit Trail</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-card">
+                    <div class="user-avatar" id="user-avatar">JD</div>
+                    <div class="user-info">
+                        <span class="user-name" id="sidebar-user-name">John Doe</span>
+                        <span class="user-role">Vault Owner</span>
+                    </div>
+                    <button class="btn-icon" onclick="handleLogout()" title="Sign Out">
+                        <span class="material-icons-round">logout</span>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main-content" id="main-content">
+            <!-- TOP BAR -->
+            <header class="top-bar">
+                <div class="top-bar-left">
+                    <button class="btn-icon mobile-menu" onclick="toggleSidebar()">
+                        <span class="material-icons-round">menu</span>
+                    </button>
+                    <div>
+                        <h2 id="page-title">Dashboard</h2>
+                        <p id="page-subtitle" class="page-subtitle">Overview of your KYC vault</p>
+                    </div>
+                </div>
+                <div class="top-bar-right">
+                    <div class="search-box">
+                        <span class="material-icons-round">search</span>
+                        <input type="text" placeholder="Search..." id="global-search">
+                    </div>
+                    <button class="btn-icon notification-btn" id="notification-btn" onclick="toggleNotifications()">
+                        <span class="material-icons-round">notifications</span>
+                        <span class="notification-badge" id="notification-badge">3</span>
+                    </button>
+                    <div class="notification-panel hidden" id="notification-panel">
+                        <div class="notification-header">
+                            <h4>Notifications</h4>
+                            <button class="btn-text" onclick="clearNotifications()">Clear All</button>
+                        </div>
+                        <div class="notification-list" id="notification-list"></div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- PAGE: DASHBOARD -->
+            <section id="page-dashboard" class="page active">
+                <div class="stats-grid">
+                    <div class="stat-card" id="stat-fields">
+                        <div class="stat-icon" style="--accent: #7c3aed;">
+                            <span class="material-icons-round">folder_shared</span>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-fields-count">0</span>
+                            <span class="stat-label">Stored Fields</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <span class="material-icons-round">trending_up</span> Secure
+                        </div>
+                    </div>
+                    <div class="stat-card" id="stat-shared">
+                        <div class="stat-icon" style="--accent: #06b6d4;">
+                            <span class="material-icons-round">share</span>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-shared-count">0</span>
+                            <span class="stat-label">Times Shared</span>
+                        </div>
+                        <div class="stat-trend neutral">
+                            <span class="material-icons-round">horizontal_rule</span> Controlled
+                        </div>
+                    </div>
+                    <div class="stat-card" id="stat-consent">
+                        <div class="stat-icon" style="--accent: #10b981;">
+                            <span class="material-icons-round">verified_user</span>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-consent-count">0</span>
+                            <span class="stat-label">Active Consents</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <span class="material-icons-round">trending_up</span> Active
+                        </div>
+                    </div>
+                    <div class="stat-card" id="stat-autofill">
+                        <div class="stat-icon" style="--accent: #f59e0b;">
+                            <span class="material-icons-round">bolt</span>
+                        </div>
+                        <div class="stat-info">
+                            <span class="stat-value" id="stat-autofill-count">0</span>
+                            <span class="stat-label">Auto-Fills Used</span>
+                        </div>
+                        <div class="stat-trend positive">
+                            <span class="material-icons-round">trending_up</span> Fast
+                        </div>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <!-- Vault Completeness -->
+                    <div class="card vault-completeness-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons-round">pie_chart</span> Vault Completeness</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="donut-chart-container">
+                                <canvas id="completeness-chart" width="200" height="200"></canvas>
+                                <div class="donut-center">
+                                    <span id="completeness-percent">0%</span>
+                                    <small>Complete</small>
+                                </div>
+                            </div>
+                            <div class="completeness-legend" id="completeness-legend"></div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="card recent-activity-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons-round">history</span> Recent Activity</h3>
+                            <a href="#" class="btn-text"
+                                onclick="navigateTo('audit', document.querySelector('[data-page=audit]'))">View All</a>
+                        </div>
+                        <div class="card-body">
+                            <div class="activity-list" id="dashboard-activity-list">
+                                <div class="empty-state small">
+                                    <span class="material-icons-round">event_note</span>
+                                    <p>No recent activity</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="card quick-actions-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons-round">flash_on</span> Quick Actions</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="quick-actions-grid">
+                                <button class="quick-action"
+                                    onclick="navigateTo('vault', document.querySelector('[data-page=vault]'))">
+                                    <span class="material-icons-round">add_circle</span>
+                                    <span>Add KYC Data</span>
+                                </button>
+                                <button class="quick-action"
+                                    onclick="navigateTo('autofill', document.querySelector('[data-page=autofill]'))">
+                                    <span class="material-icons-round">edit_note</span>
+                                    <span>Try Auto-Fill</span>
+                                </button>
+                                <button class="quick-action"
+                                    onclick="navigateTo('consent', document.querySelector('[data-page=consent]'))">
+                                    <span class="material-icons-round">settings</span>
+                                    <span>Manage Consents</span>
+                                </button>
+                                <button class="quick-action"
+                                    onclick="navigateTo('audit', document.querySelector('[data-page=audit]'))">
+                                    <span class="material-icons-round">history</span>
+                                    <span>View Audit Log</span>
+                                </button>
+                                <button class="quick-action" onclick="loadSampleData()">
+                                    <span class="material-icons-round">cloud_download</span>
+                                    <span>Load Sample Data</span>
+                                </button>
+                                <button class="quick-action" onclick="exportVaultData()">
+                                    <span class="material-icons-round">download</span>
+                                    <span>Export Data</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Security Score -->
+                    <div class="card security-card">
+                        <div class="card-header">
+                            <h3><span class="material-icons-round">security</span> Security Score</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="security-score-container">
+                                <div class="security-gauge">
+                                    <svg viewBox="0 0 120 120" class="gauge-svg">
+                                        <circle cx="60" cy="60" r="50" class="gauge-bg" />
+                                        <circle cx="60" cy="60" r="50" class="gauge-fill" id="security-gauge-fill" />
+                                    </svg>
+                                    <div class="gauge-center">
+                                        <span id="security-score">0</span>
+                                        <small>/100</small>
+                                    </div>
+                                </div>
+                                <div class="security-tips" id="security-tips"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PAGE: MY VAULT -->
+            <section id="page-vault" class="page">
+                <div class="vault-header">
+                    <div class="vault-tabs">
+                        <button class="vault-tab active" data-category="personal"
+                            onclick="switchVaultTab('personal', this)">
+                            <span class="material-icons-round">person</span> Personal Info
+                        </button>
+                        <button class="vault-tab" data-category="identity" onclick="switchVaultTab('identity', this)">
+                            <span class="material-icons-round">badge</span> Identity Documents
+                        </button>
+                        <button class="vault-tab" data-category="address" onclick="switchVaultTab('address', this)">
+                            <span class="material-icons-round">home</span> Address Details
+                        </button>
+                        <button class="vault-tab" data-category="financial" onclick="switchVaultTab('financial', this)">
+                            <span class="material-icons-round">account_balance</span> Financial Info
+                        </button>
+                        <button class="vault-tab" data-category="employment"
+                            onclick="switchVaultTab('employment', this)">
+                            <span class="material-icons-round">work</span> Employment
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Personal Info -->
+                <div id="vault-personal" class="vault-section active">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><span class="material-icons-round">person</span> Personal Information</h3>
+                            <div class="card-actions">
+                                <span class="verified-badge" id="personal-verified"><span
+                                        class="material-icons-round">verified</span> Verified</span>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="vault-form-grid">
+                                <div class="form-group">
+                                    <label>First Name</label>
+                                    <div class="input-wrapper vault-input">
+                                        <span class="material-icons-round">person</span>
+                                        <input type="text" id="vault-firstName" placeholder="Enter first name"
+                                            onchange="saveVaultField('firstName', this.value)">
+                                        <span class="field-status" id="status-firstName"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Last Name</label>
+                                    <div class="input-wrapper vault-input">
+                                        <span class="material-icons-round">person</span>
+                                        <input type="text" id="vault-lastName" placeholder="Enter last name"
+                                            onchange="saveVaultField('lastName', this.value)">
+                                        <span class="field-status" id="status-lastName"></span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Username</label>
+                                    <div class="input-wrapper vault-input">
+                                        <span class="material-icons-round">account_circle</span>
+                                        <input type="text" id="vault-username" placeholder="Enter username"
+                                            onchange="saveVaultField('username', this.value)">
+                                        <span class="field-status" id="status-username"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Day of Birth</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">today</span>
+                                    <select id="vault-dobDay" onchange="saveVaultField('dobDay', this.value)">
+                                        <option value="">Day</option>
+                                        <script>for (let d = 1; d <= 31; d++) document.write(`<option value="${d}">${d}</option>`);</script>
+                                    </select>
+                                    <span class="field-status" id="status-dobDay"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Month of Birth</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">calendar_month</span>
+                                    <select id="vault-dobMonth" onchange="saveVaultField('dobMonth', this.value)">
+                                        <option value="">Month</option>
+                                        <option value="01">January</option>
+                                        <option value="02">February</option>
+                                        <option value="03">March</option>
+                                        <option value="04">April</option>
+                                        <option value="05">May</option>
+                                        <option value="06">June</option>
+                                        <option value="07">July</option>
+                                        <option value="08">August</option>
+                                        <option value="09">September</option>
+                                        <option value="10">October</option>
+                                        <option value="11">November</option>
+                                        <option value="12">December</option>
+                                    </select>
+                                    <span class="field-status" id="status-dobMonth"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Year of Birth</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">event</span>
+                                    <input type="number" id="vault-dobYear" placeholder="e.g. 1995" min="1900"
+                                        max="2025" onchange="saveVaultField('dobYear', this.value)">
+                                    <span class="field-status" id="status-dobYear"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">wc</span>
+                                    <select id="vault-gender" onchange="saveVaultField('gender', this.value)">
+                                        <option value="">Select</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                    <span class="field-status" id="status-gender"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Email Address</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">mail</span>
+                                    <input type="email" id="vault-email" placeholder="you@example.com"
+                                        onchange="saveVaultField('email', this.value)">
+                                    <span class="field-status" id="status-email"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Phone Number</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">phone</span>
+                                    <input type="tel" id="vault-phone" placeholder="+91 9876543210"
+                                        onchange="saveVaultField('phone', this.value)">
+                                    <span class="field-status" id="status-phone"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Nationality</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">flag</span>
+                                    <input type="text" id="vault-nationality" placeholder="e.g. Indian"
+                                        onchange="saveVaultField('nationality', this.value)">
+                                    <span class="field-status" id="status-nationality"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Marital Status</label>
+                                <div class="input-wrapper vault-input">
+                                    <span class="material-icons-round">favorite</span>
+                                    <select id="vault-maritalStatus"
+                                        onchange="saveVaultField('maritalStatus', this.value)">
+                                        <option value="">Select</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Divorced">Divorced</option>
+                                        <option value="Widowed">Widowed</option>
+                                    </select>
+                                    <span class="field-status" id="status-maritalStatus"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    </div>
+
+    <!-- Identity Documents -->
+    <div id="vault-identity" class="vault-section">
+        <div class="card">
+            <div class="card-header">
+                <h3><span class="material-icons-round">badge</span> Identity Documents</h3>
+            </div>
+            <div class="card-body">
+                <div class="vault-form-grid">
+                    <div class="form-group">
+                        <label>Aadhaar Number</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">credit_card</span>
+                            <input type="text" id="vault-aadhaar" placeholder="XXXX XXXX XXXX" maxlength="14"
+                                onchange="saveVaultField('aadhaar', this.value)" oninput="formatAadhaar(this)">
+                            <span class="field-status" id="status-aadhaar"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>PAN Number</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">credit_card</span>
+                            <input type="text" id="vault-pan" placeholder="ABCDE1234F" maxlength="10"
+                                style="text-transform: uppercase"
+                                onchange="saveVaultField('pan', this.value.toUpperCase())">
+                            <span class="field-status" id="status-pan"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Passport Number</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">flight</span>
+                            <input type="text" id="vault-passport" placeholder="A1234567" maxlength="8"
+                                style="text-transform: uppercase"
+                                onchange="saveVaultField('passport', this.value.toUpperCase())">
+                            <span class="field-status" id="status-passport"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Voter ID</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">how_to_vote</span>
+                            <input type="text" id="vault-voterId" placeholder="ABC1234567" maxlength="10"
+                                style="text-transform: uppercase"
+                                onchange="saveVaultField('voterId', this.value.toUpperCase())">
+                            <span class="field-status" id="status-voterId"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Driving License</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">directions_car</span>
+                            <input type="text" id="vault-drivingLicense" placeholder="DL-1420110012345"
+                                style="text-transform: uppercase"
+                                onchange="saveVaultField('drivingLicense', this.value.toUpperCase())">
+                            <span class="field-status" id="status-drivingLicense"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Address Details -->
+    <div id="vault-address" class="vault-section">
+        <div class="card">
+            <div class="card-header">
+                <h3><span class="material-icons-round">home</span> Address Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="vault-form-grid">
+                    <div class="form-group full-width">
+                        <label>Address Line 1</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">location_on</span>
+                            <input type="text" id="vault-addressLine1" placeholder="House/Flat No, Building Name"
+                                onchange="saveVaultField('addressLine1', this.value)">
+                            <span class="field-status" id="status-addressLine1"></span>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Address Line 2</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">location_on</span>
+                            <input type="text" id="vault-addressLine2" placeholder="Street, Area, Landmark"
+                                onchange="saveVaultField('addressLine2', this.value)">
+                            <span class="field-status" id="status-addressLine2"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">location_city</span>
+                            <input type="text" id="vault-city" placeholder="e.g. Mumbai"
+                                onchange="saveVaultField('city', this.value)">
+                            <span class="field-status" id="status-city"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>State</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">map</span>
+                            <input type="text" id="vault-state" placeholder="e.g. Maharashtra"
+                                onchange="saveVaultField('state', this.value)">
+                            <span class="field-status" id="status-state"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>PIN Code</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">pin</span>
+                            <input type="text" id="vault-pincode" placeholder="400001" maxlength="6"
+                                onchange="saveVaultField('pincode', this.value)">
+                            <span class="field-status" id="status-pincode"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">public</span>
+                            <input type="text" id="vault-country" placeholder="e.g. India"
+                                onchange="saveVaultField('country', this.value)">
+                            <span class="field-status" id="status-country"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Financial Info -->
+    <div id="vault-financial" class="vault-section">
+        <div class="card">
+            <div class="card-header">
+                <h3><span class="material-icons-round">account_balance</span> Financial Information</h3>
+            </div>
+            <div class="card-body">
+                <div class="vault-form-grid">
+                    <div class="form-group">
+                        <label>Bank Name</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">account_balance</span>
+                            <input type="text" id="vault-bankName" placeholder="e.g. State Bank of India"
+                                onchange="saveVaultField('bankName', this.value)">
+                            <span class="field-status" id="status-bankName"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Account Number</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">credit_card</span>
+                            <input type="text" id="vault-accountNumber" placeholder="Account Number"
+                                onchange="saveVaultField('accountNumber', this.value)">
+                            <span class="field-status" id="status-accountNumber"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>IFSC Code</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">code</span>
+                            <input type="text" id="vault-ifsc" placeholder="SBIN0001234" maxlength="11"
+                                style="text-transform: uppercase"
+                                onchange="saveVaultField('ifsc', this.value.toUpperCase())">
+                            <span class="field-status" id="status-ifsc"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Annual Income</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">currency_rupee</span>
+                            <select id="vault-annualIncome" onchange="saveVaultField('annualIncome', this.value)">
+                                <option value="">Select Range</option>
+                                <option value="Below 2.5L">Below ₹2.5 Lakhs</option>
+                                <option value="2.5L - 5L">₹2.5L - ₹5 Lakhs</option>
+                                <option value="5L - 10L">₹5L - ₹10 Lakhs</option>
+                                <option value="10L - 25L">₹10L - ₹25 Lakhs</option>
+                                <option value="Above 25L">Above ₹25 Lakhs</option>
+                            </select>
+                            <span class="field-status" id="status-annualIncome"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Employment -->
+    <div id="vault-employment" class="vault-section">
+        <div class="card">
+            <div class="card-header">
+                <h3><span class="material-icons-round">work</span> Employment Details</h3>
+            </div>
+            <div class="card-body">
+                <div class="vault-form-grid">
+                    <div class="form-group">
+                        <label>Occupation</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">work</span>
+                            <select id="vault-occupation" onchange="saveVaultField('occupation', this.value)">
+                                <option value="">Select</option>
+                                <option value="Salaried">Salaried</option>
+                                <option value="Self-Employed">Self-Employed</option>
+                                <option value="Business">Business</option>
+                                <option value="Student">Student</option>
+                                <option value="Retired">Retired</option>
+                                <option value="Homemaker">Homemaker</option>
+                            </select>
+                            <span class="field-status" id="status-occupation"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Employer Name</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">business</span>
+                            <input type="text" id="vault-employer" placeholder="Company name"
+                                onchange="saveVaultField('employer', this.value)">
+                            <span class="field-status" id="status-employer"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Designation</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">badge</span>
+                            <input type="text" id="vault-designation" placeholder="e.g. Software Engineer"
+                                onchange="saveVaultField('designation', this.value)">
+                            <span class="field-status" id="status-designation"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Work Experience (Years)</label>
+                        <div class="input-wrapper vault-input">
+                            <span class="material-icons-round">timeline</span>
+                            <input type="number" id="vault-experience" placeholder="e.g. 5" min="0" max="60"
+                                onchange="saveVaultField('experience', this.value)">
+                            <span class="field-status" id="status-experience"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    <!-- PAGE: AUTO-FILL DEMO -->
+    <section id="page-autofill" class="page">
+        <div class="autofill-demo-container">
+            <!-- Mode Selector -->
+            <div class="demo-mode-selector">
+                <div class="mode-toggle">
+                    <button class="mode-btn active" id="mode-manual" onclick="setDemoMode('manual')">
+                        <span class="material-icons-round">edit</span>
+                        Manual Entry
+                    </button>
+                    <button class="mode-btn" id="mode-auto" onclick="setDemoMode('auto')">
+                        <span class="material-icons-round">bolt</span>
+                        Auto-Fill
+                    </button>
+                </div>
+                <div class="mode-info" id="mode-info">
+                    <span class="material-icons-round">info</span>
+                    <p>Manually type in every field — the traditional, slow way.</p>
+                </div>
+            </div>
+
+            <!-- Form Type Selector -->
+            <div class="form-type-selector">
+                <label>Select Form Type:</label>
+                <div class="form-type-buttons">
+                    <button class="form-type-btn active" onclick="selectFormType('bank', this)">
+                        <span class="material-icons-round">account_balance</span>
+                        Bank Account
+                    </button>
+                    <button class="form-type-btn" onclick="selectFormType('passport', this)">
+                        <span class="material-icons-round">flight</span>
+                        Passport Application
+                    </button>
+                    <button class="form-type-btn" onclick="selectFormType('university', this)">
+                        <span class="material-icons-round">school</span>
+                        University Admission
+                    </button>
+                    <button class="form-type-btn" onclick="selectFormType('insurance', this)">
+                        <span class="material-icons-round">health_and_safety</span>
+                        Insurance
+                    </button>
+                </div>
+            </div>
+
+            <!-- Timer and Stats -->
+            <div class="demo-stats-bar">
+                <div class="demo-stat">
+                    <span class="material-icons-round">timer</span>
+                    <span>Time: <strong id="demo-timer">00:00</strong></span>
+                </div>
+                <div class="demo-stat">
+                    <span class="material-icons-round">check_circle</span>
+                    <span>Fields: <strong id="demo-fields-filled">0</strong>/<strong
+                            id="demo-fields-total">0</strong></span>
+                </div>
+                <div class="demo-stat">
+                    <span class="material-icons-round">error</span>
+                    <span>Errors: <strong id="demo-errors" class="text-danger">0</strong></span>
+                </div>
+            </div>
+
+            <!-- Demo Form -->
+            <div class="card demo-form-card">
+                <div class="card-header">
+                    <h3 id="demo-form-title">
+                        <span class="material-icons-round">account_balance</span>
+                        Bank Account Opening Form
+                    </h3>
+                    <div class="card-actions">
+                        <button class="btn btn-secondary btn-sm" onclick="resetDemoForm()">
+                            <span class="material-icons-round">refresh</span> Reset
+                        </button>
+                        <button class="btn btn-primary btn-sm" id="demo-autofill-btn" onclick="triggerAutoFill()"
+                            style="display:none">
+                            <span class="material-icons-round">bolt</span> Auto-Fill Now
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div id="demo-form-container" class="demo-form-grid">
+                        <!-- Dynamic form fields will be injected here -->
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button class="btn btn-primary" onclick="validateAndSubmitDemo()">
+                        <span class="material-icons-round">send</span>
+                        Submit Application
+                    </button>
+                </div>
+            </div>
+
+            <!-- Comparison Results -->
+            <div class="comparison-card hidden" id="comparison-card">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><span class="material-icons-round">compare_arrows</span> Manual vs Auto-Fill
+                            Comparison</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="comparison-grid">
+                            <div class="comparison-item">
+                                <div class="comparison-label">Time Taken</div>
+                                <div class="comparison-values">
+                                    <div class="comparison-manual">
+                                        <span class="material-icons-round">edit</span>
+                                        <span id="comp-manual-time">--</span>
+                                    </div>
+                                    <div class="comparison-vs">VS</div>
+                                    <div class="comparison-auto">
+                                        <span class="material-icons-round">bolt</span>
+                                        <span id="comp-auto-time">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-label">Errors</div>
+                                <div class="comparison-values">
+                                    <div class="comparison-manual">
+                                        <span id="comp-manual-errors">--</span>
+                                    </div>
+                                    <div class="comparison-vs">VS</div>
+                                    <div class="comparison-auto">
+                                        <span id="comp-auto-errors">--</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="comparison-item">
+                                <div class="comparison-label">Time Saved</div>
+                                <div class="time-saved" id="comp-time-saved">--</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE: CONSENT MANAGER -->
+    <section id="page-consent" class="page">
+        <div class="consent-header-bar">
+            <div class="consent-search">
+                <span class="material-icons-round">search</span>
+                <input type="text" id="consent-search" placeholder="Search fields..."
+                    oninput="filterConsentFields(this.value)">
+            </div>
+            <div class="consent-bulk-actions">
+                <button class="btn btn-secondary btn-sm" onclick="bulkConsent(true)">
+                    <span class="material-icons-round">check_circle</span> Enable All
+                </button>
+                <button class="btn btn-secondary btn-sm" onclick="bulkConsent(false)">
+                    <span class="material-icons-round">cancel</span> Disable All
+                </button>
+            </div>
+        </div>
+
+        <div class="consent-purpose-selector">
+            <label>Sharing Purpose:</label>
+            <div class="purpose-buttons">
+                <button class="purpose-btn active" onclick="selectPurpose('banking', this)">
+                    <span class="material-icons-round">account_balance</span> Banking
+                </button>
+                <button class="purpose-btn" onclick="selectPurpose('government', this)">
+                    <span class="material-icons-round">account_balance_wallet</span> Government
+                </button>
+                <button class="purpose-btn" onclick="selectPurpose('education', this)">
+                    <span class="material-icons-round">school</span> Education
+                </button>
+                <button class="purpose-btn" onclick="selectPurpose('insurance', this)">
+                    <span class="material-icons-round">health_and_safety</span> Insurance
+                </button>
+            </div>
+        </div>
+
+        <div class="consent-grid" id="consent-grid">
+            <!-- Dynamic consent cards will be injected here -->
+        </div>
+
+        <div class="consent-summary card" id="consent-summary">
+            <div class="card-header">
+                <h3><span class="material-icons-round">summarize</span> Sharing Summary</h3>
+            </div>
+            <div class="card-body">
+                <div class="sharing-preview" id="sharing-preview">
+                    <!-- Dynamic sharing summary -->
+                </div>
+                <button class="btn btn-primary" onclick="confirmConsent()">
+                    <span class="material-icons-round">verified</span>
+                    Confirm & Save Consent
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- PAGE: AUDIT TRAIL -->
+    <!-- ============ FORM SCANNER ============ -->
+    <section id="page-scanner" class="page">
+        <!-- Step 1: Upload -->
+        <div class="scanner-step" id="scanner-step-upload">
+            <div class="card">
+                <div class="card-header">
+                    <h3><span class="material-icons-round">cloud_upload</span> Upload Form</h3>
+                </div>
+                <div class="card-body">
+                    <div class="scanner-upload-zone" id="scanner-drop-zone"
+                        onclick="document.getElementById('scanner-file-input').click()">
+                        <input type="file" id="scanner-file-input" accept="image/*,.pdf" hidden
+                            onchange="handleFormUpload(event)">
+                        <div class="upload-icon">
+                            <span class="material-icons-round">document_scanner</span>
+                        </div>
+                        <h4>Upload or Drag a Form</h4>
+                        <p>Supports JPG, PNG, PDF — max 10MB</p>
+                        <div class="upload-formats">
+                            <span><span class="material-icons-round">photo_camera</span> Photo</span>
+                            <span><span class="material-icons-round">image</span> Scan</span>
+                            <span><span class="material-icons-round">picture_as_pdf</span> PDF</span>
+                        </div>
+                    </div>
+                    <div class="scanner-tips">
+                        <div class="tip-item">
+                            <span class="material-icons-round">tips_and_updates</span>
+                            <span>For best results, use a clear, flat photo with good lighting</span>
+                        </div>
+                        <div class="tip-item">
+                            <span class="material-icons-round">straighten</span>
+                            <span>Ensure the form is fully visible and not cropped</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Processing -->
+        <div class="scanner-step hidden" id="scanner-step-processing">
+            <div class="card">
+                <div class="card-body" style="text-align:center;padding:60px 40px;">
+                    <div class="scanner-progress-ring">
+                        <svg viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.05)"
+                                stroke-width="8" />
+                            <circle cx="60" cy="60" r="54" fill="none" stroke="url(#scanner-grad)" stroke-width="8"
+                                stroke-linecap="round" stroke-dasharray="339.3" stroke-dashoffset="339.3"
+                                id="scanner-progress-circle" />
+                            <defs>
+                                <linearGradient id="scanner-grad">
+                                    <stop offset="0%" stop-color="#7c3aed" />
+                                    <stop offset="100%" stop-color="#06b6d4" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                        <span class="scanner-progress-text" id="scanner-progress-text">0%</span>
+                    </div>
+                    <h3 style="margin-top:20px;" id="scanner-status-text">Scanning form...</h3>
+                    <p style="color:var(--text-muted);margin-top:8px;" id="scanner-substatus">Initializing OCR
+                        engine</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 3: Results -->
+        <div class="scanner-step hidden" id="scanner-step-results">
+            <div class="scanner-results-grid">
+                <!-- Left: Image preview -->
+                <div class="card scanner-preview-card">
+                    <div class="card-header">
+                        <h3><span class="material-icons-round">image</span> Form Preview</h3>
+                        <div style="display:flex;gap:8px;align-items:center;">
+                            <div class="scanner-view-tabs">
+                                <button class="scanner-view-tab active" id="tab-original"
+                                    onclick="switchScannerView('original')">Original</button>
+                                <button class="scanner-view-tab" id="tab-filled"
+                                    onclick="switchScannerView('filled')">Filled</button>
+                            </div>
+                            <button class="btn btn-secondary btn-sm" onclick="resetScanner()">
+                                <span class="material-icons-round">refresh</span> New Scan
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="scanner-image-container" id="scanner-view-original">
+                            <img id="scanner-preview-img" alt="Scanned form">
+                        </div>
+                        <div class="scanner-image-container hidden" id="scanner-view-filled">
+                            <canvas id="scanner-filled-canvas"></canvas>
+                        </div>
+                        <button class="btn btn-primary" style="width:100%;margin-top:12px;"
+                            onclick="downloadFilledImage()">
+                            <span class="material-icons-round">download</span> Download Filled Form Image
+                        </button>
+                    </div>
+                </div>
+                <!-- Right: Detected fields -->
+                <div class="card scanner-fields-card">
+                    <div class="card-header">
+                        <h3><span class="material-icons-round">checklist</span> Detected Fields</h3>
+                        <div class="scanner-match-badge" id="scanner-match-badge">
+                            <span class="material-icons-round">check_circle</span>
+                            <span id="scanner-match-count">0</span> matched
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="scanner-fields-list" id="scanner-fields-list">
+                            <!-- Dynamic fields injected here -->
+                        </div>
+                        <div class="scanner-actions">
+                            <button class="btn btn-primary" onclick="applyScannedToVault()">
+                                <span class="material-icons-round">save</span> Save to Vault
+                            </button>
+                            <button class="btn btn-secondary" onclick="generateFilledPDF()">
+                                <span class="material-icons-round">picture_as_pdf</span> Export as PDF
+                            </button>
+                            <button class="btn btn-secondary" onclick="copyScannedAsText()">
+                                <span class="material-icons-round">content_copy</span> Copy as Text
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Editable Digital Form Preview -->
+            <div class="card" style="margin-top:20px;">
+                <div class="card-header">
+                    <h3><span class="material-icons-round">edit_document</span> Digital Form Preview</h3>
+                    <span class="verified-badge" style="background:rgba(6,182,212,0.12);color:#22d3ee;">
+                        <span class="material-icons-round">auto_awesome</span> AI Generated
+                    </span>
+                </div>
+                <div class="card-body">
+                    <div class="scanner-digital-form" id="scanner-digital-form">
+                        <!-- Editable form fields injected here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="page-audit" class="page">
+        <div class="audit-filters">
+            <div class="audit-filter-group">
+                <label>Filter by Action:</label>
+                <select id="audit-action-filter" onchange="filterAuditLogs()">
+                    <option value="all">All Actions</option>
+                    <option value="field_updated">Field Updated</option>
+                    <option value="data_shared">Data Shared</option>
+                    <option value="consent_changed">Consent Changed</option>
+                    <option value="autofill_used">Auto-Fill Used</option>
+                    <option value="login">Login</option>
+                    <option value="export">Data Export</option>
+                </select>
+            </div>
+            <div class="audit-filter-group">
+                <label>Date Range:</label>
+                <input type="date" id="audit-date-from" onchange="filterAuditLogs()">
+                <span class="audit-date-separator">to</span>
+                <input type="date" id="audit-date-to" onchange="filterAuditLogs()">
+            </div>
+            <button class="btn btn-secondary btn-sm" onclick="exportAuditLogs()">
+                <span class="material-icons-round">download</span> Export Logs
+            </button>
+        </div>
+
+        <div class="audit-timeline" id="audit-timeline">
+            <!-- Dynamic audit logs will be injected here -->
+        </div>
+    </section>
+    </main>
+    </div>
+
+    <!-- ============ TOAST NOTIFICATIONS ============ -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- ============ MODAL ============ -->
+    <div class="modal-overlay hidden" id="modal-overlay" onclick="closeModal()">
+        <div class="modal" onclick="event.stopPropagation()">
+            <div class="modal-header">
+                <h3 id="modal-title">Modal Title</h3>
+                <button class="btn-icon" onclick="closeModal()">
+                    <span class="material-icons-round">close</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+            <div class="modal-footer" id="modal-footer"></div>
+        </div>
+    </div>
+
+    <!-- OCR & PDF Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Firebase SDK -->
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="app.js"></script>
+</body>
+
+</html>

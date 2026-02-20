@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+    <!-- LOGIN VIEW -->
+    <div id="view-login" class="view active">
+        <div class="popup-header">
+            <div class="logo">
+                <img src="icons/icon48.png" alt="KYC Vault">
+                <span>KYC <span class="accent">Vault</span></span>
+            </div>
+        </div>
+        <div class="popup-body">
+            <p class="subtitle">Sign in to auto-fill forms</p>
+            <div class="form-group">
+                <label>Email</label>
+                <div class="input-wrap">
+                    <span class="material-icons-round">mail</span>
+                    <input type="email" id="login-email" placeholder="you@example.com">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrap">
+                    <span class="material-icons-round">lock</span>
+                    <input type="password" id="login-password" placeholder="Enter password">
+                </div>
+            </div>
+            <button class="btn-primary" id="btn-login">
+                <span class="material-icons-round">login</span> Sign In
+            </button>
+            <p class="hint">Use the same account as your KYC Vault web app</p>
+        </div>
+    </div>
+
+    <!-- MAIN VIEW -->
+    <div id="view-main" class="view">
+        <div class="popup-header">
+            <div class="logo">
+                <img src="icons/icon48.png" alt="KYC Vault">
+                <span>KYC <span class="accent">Vault</span></span>
+            </div>
+            <button class="btn-icon" id="btn-logout" title="Sign Out">
+                <span class="material-icons-round">logout</span>
+            </button>
+        </div>
+        <div class="popup-body">
+            <div class="user-bar" id="user-bar">
+                <div class="user-avatar" id="popup-avatar">U</div>
+                <div class="user-info">
+                    <span class="user-name" id="popup-name">User</span>
+                    <span class="user-email" id="popup-email">user@email.com</span>
+                </div>
+                <span class="badge" id="popup-badge">0 fields</span>
+            </div>
+
+            <div class="action-card" id="btn-autofill">
+                <div class="action-icon fill">
+                    <span class="material-icons-round">bolt</span>
+                </div>
+                <div class="action-info">
+                    <h4>Auto-Fill This Page</h4>
+                    <p>Detect form fields and fill them from your vault</p>
+                </div>
+                <span class="material-icons-round arrow">chevron_right</span>
+            </div>
+
+            <div class="action-card" id="btn-scan">
+                <div class="action-icon scan">
+                    <span class="material-icons-round">search</span>
+                </div>
+                <div class="action-info">
+                    <h4>Scan Page Fields</h4>
+                    <p>Find fillable fields on the current page</p>
+                </div>
+                <span class="material-icons-round arrow">chevron_right</span>
+            </div>
+
+            <div class="action-card" id="btn-open-vault">
+                <div class="action-icon vault">
+                    <span class="material-icons-round">account_balance_wallet</span>
+                </div>
+                <div class="action-info">
+                    <h4>Open KYC Vault</h4>
+                    <p>Manage your stored identity data</p>
+                </div>
+                <span class="material-icons-round arrow">chevron_right</span>
+            </div>
+
+            <!-- Scan Results -->
+            <div id="scan-results" class="scan-results hidden">
+                <div class="scan-header">
+                    <h4><span class="material-icons-round">checklist</span> Detected Fields</h4>
+                    <span class="field-count" id="field-count">0 found</span>
+                </div>
+                <div id="field-list" class="field-list"></div>
+                <button class="btn-primary" id="btn-fill-selected">
+                    <span class="material-icons-round">bolt</span> Fill Selected Fields
+                </button>
+            </div>
+
+            <div class="status-bar" id="status-bar">
+                <span class="material-icons-round">info</span>
+                <span id="status-text">Ready</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+
+</html>
